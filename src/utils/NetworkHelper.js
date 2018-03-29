@@ -249,6 +249,8 @@ class NetworkHelper {
     .config({
       path: downloadPath,
       breakpointDownload: true,
+      overwrite: false,
+      IOSBackgroundTask: true,
     })
     .fetch('GET', finalUrl, {
         Range:'bytes='+dBytes + '-',

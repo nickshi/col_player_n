@@ -48,7 +48,7 @@ function loadLocalLecture(lecture) {
     });
 
     function loadWhiteboard1Data() {
-      if (lecture['wb1indexsize'] == 0) {
+      if (lecture['wb1datasize'] == 0) {
         return new Promise(function(resolve, reject) {
           resolve(null);
         });
@@ -62,7 +62,7 @@ function loadLocalLecture(lecture) {
     }
 
     function loadWhiteboard2Data() {
-      if (lecture['wb2indexsize'] == 0) {
+      if (lecture['wb2datasize'] == 0) {
         return new Promise(function(resolve, reject) {
           resolve(null);
         });
@@ -99,7 +99,8 @@ function loadLocalLecture(lecture) {
         local: true,
       });
       }).catch(error => {
-        console.log('error ', error);
+        alert('loadDataError ');
+       console.log('loadDataError ', error.stack);
       dispatch({
         type: ActionTypes.LECTURE_LOAD_FAILURE,
         error,

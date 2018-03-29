@@ -6,7 +6,6 @@ import com.facebook.react.ReactApplication;
 import com.RNFetchBlob.RNFetchBlobPackage;
 import com.rnfs.RNFSPackage;
 import com.brentvatne.react.ReactVideoPackage;
-import com.RNFetchBlob.RNFetchBlobPackage;
 import com.nick.nativecolview.ReactDrawViewPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
@@ -31,7 +30,6 @@ public class MainApplication extends Application implements ReactApplication {
             new RNFetchBlobPackage(),
             new RNFSPackage(),
             new ReactVideoPackage(),
-            new RNFetchBlobPackage(),
             new ReactDrawViewPackage()
       );
     }

@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
 import {
   StyleSheet,
   View,
@@ -8,17 +8,14 @@ import {
   Text,
   Image,
   TouchableHighlight
-} from 'react-native';
-import { Actions } from 'react-native-router-flux';
-import LectureCell from './components/LectureCell';
-import Header from '../../components/Header';
+} from "react-native";
+import { Actions } from "react-native-router-flux";
+import LectureCell from "./components/LectureCell";
+import Header from "../../components/Header";
 
-import  Col from '../../lib/col/Col';
+import Col from "../../lib/col/Col";
 
-
-import styles from './style';
-
-
+import styles from "./style";
 
 class HomeScreen extends Component {
   constructor(props) {
@@ -54,19 +51,15 @@ class HomeScreen extends Component {
   lectureLoading() {
     const { lecture } = this.props;
     let loadingScreen = (
-      <View style = {styles.centering}>
-        <ActivityIndicator
-          animating={true}
-          size="large"
-          style=''
-        />
+      <View style={styles.centering}>
+        <ActivityIndicator animating={true} size="large" style="" />
       </View>
     );
     if (lecture.loading) return loadingScreen;
   }
 
   downloadLecture(lecture) {
-    if (lecture.state === 'pending') {
+    if (lecture.state === "pending") {
       const { coursesActions } = this.props;
       coursesActions.downloadLecture(lecture);
     }
@@ -78,7 +71,7 @@ class HomeScreen extends Component {
   }
 
   async clearLectureData(lecture) {
-     const { lectureActions } = this.props;
+    const { lectureActions } = this.props;
     lectureActions.clearLecture(lecture.id);
   }
 
@@ -100,11 +93,11 @@ class HomeScreen extends Component {
     const self = this;
     return (
       <LectureCell
-        onSelect = {() => self.downloadLecture(rowData)}
-        playLecture = {() => self.playLecture(rowData)}
-        clearLectureData = {() => self.clearLectureData(rowData)}
-        downloadLecture = {() => self.downloadLecture(rowData)}
-        lecture = {rowData}
+        onSelect={() => self.downloadLecture(rowData)}
+        playLecture={() => self.playLecture(rowData)}
+        clearLectureData={() => self.clearLectureData(rowData)}
+        downloadLecture={() => self.downloadLecture(rowData)}
+        lecture={rowData}
       />
     );
   }
@@ -117,26 +110,24 @@ class HomeScreen extends Component {
     if (courseInfo.loading)
       content = (
         <View style={[styles.centering]}>
-          <ActivityIndicator
-            animating={true}
-            size="large"
-          />
+          <ActivityIndicator animating={true} size="large" />
         </View>
       );
     else
       content = (
         <ListView
-          dataSource = {this.state.dataSource.cloneWithRowsAndSections(courses, courseNames)}
+          dataSource={this.state.dataSource.cloneWithRowsAndSections(
+            courses,
+            courseNames
+          )}
           renderSectionHeader={this.renderSectionHeader.bind(this)}
-          renderRow = {this.renderRow.bind(this)}
-          enableEmptySections = {true}
-        />);
-    return (
-      <View style={styles.container} >
-        <Header
-          isLogged = {true}
-          onLogout = { this.logout }
+          renderRow={this.renderRow.bind(this)}
+          enableEmptySections={true}
         />
+      );
+    return (
+      <View style={styles.container}>
+        <Header isLogged={true} onLogout={this.logout} />
         {content}
         {this.lectureLoading()}
       </View>
@@ -150,8 +141,7 @@ HomeScreen.propTypes = {
   courseInfo: PropTypes.object,
   coursesActions: PropTypes.object,
   lectureActions: PropTypes.object,
-  accountActions: PropTypes.object,
+  accountActions: PropTypes.object
 };
-
 
 export default HomeScreen;

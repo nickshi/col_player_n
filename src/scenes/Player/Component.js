@@ -25,8 +25,6 @@ const styles = StyleSheet.create({
       bottom:0, 
       left: 0, 
       right: 0,
-      borderColor: 'green',
-      borderWidth: 1,
     }
   });
 const innerObj = StyleSheet.flatten(styles.inner);
@@ -138,7 +136,7 @@ export default class PlayerScreen extends Component {
       screenView = (
           <ScreenShot
             { ...this.props }
-            style = { styles.inner }
+            style = { innerObj }
           />
           );
     }
@@ -148,7 +146,7 @@ export default class PlayerScreen extends Component {
           {screenView}
           <TouchableOpacity
             onPress = {this.screenClick}
-            style = { styles.inner }
+            style = { innerObj }
           />
       </View>
     );
@@ -159,13 +157,12 @@ export default class PlayerScreen extends Component {
     return (
       <View key = { 3 } style = {layout.whiteboard1}>
         <WhiteBoard
-          { ...this.props }
           boardname = {'whiteboard1'}
-          style = {styles.inner}
+          style = {innerObj}
         />
         <TouchableOpacity
           onPress = {this.whiteboard1Click}
-          style = {styles.inner}
+          style = {innerObj}
         />
       </View>
     );
@@ -176,13 +173,12 @@ export default class PlayerScreen extends Component {
     return (
       <View key = { 4 }  style = {layout.whiteboard2}>
         <WhiteBoard
-          { ...this.props }
-          style = {styles.inner}
+          style = {innerObj}
           boardname = {'whiteboard2'}
         />
         <TouchableOpacity
           onPress = {this.whiteboard2Click}
-          style = {styles.inner}
+          style = {innerObj}
         />
       </View>
     );
@@ -192,9 +188,11 @@ export default class PlayerScreen extends Component {
     const { lecture, layout } = this.props;
     let smallViews = [];
     const views = ['video','screen'];
- 
-    if (lecture.lectureInfo.wb1indexsize !== 0) { views.push('whiteboard1'); }
-    if (lecture.lectureInfo.wb2indexsize !== 0) { views.push('whiteboard2'); }
+    
+  
+    if (lecture.lectureInfo.wb1datasize !== 0) { views.push('whiteboard1'); }
+    if (lecture.lectureInfo.wb2datasize !== 0) { views.push('whiteboard2'); }
+
     const viewsMap = {
       video: this.renderVideo(),
       screen: this.renderScreen(),
@@ -206,9 +204,7 @@ export default class PlayerScreen extends Component {
       smallViews = views.map(view => (viewsMap[view]));
     return (
       <View style = { styles.container }>
-        {/* {this.renderVideo()} */}
         {smallViews}
-        {/* { this.renderScreen() } */}
         {this.renderControl()}
       </View>
     );

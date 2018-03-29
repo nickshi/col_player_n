@@ -16,21 +16,20 @@ export default class WhiteBoard extends Component {
   // }
 
   render() {
-    const { whiteboard } = this.props;
-    //console.log("whiteboard.points", whiteboard.points);
+    const { whiteboard, style } = this.props;
+    //console.log("whiteboard.points ", whiteboard);
     return (
         <WhiteBoardView
+          style = { style }
           milsecond = { whiteboard.millisecond }
           points = { whiteboard.points }
-          {...this.props}
         />
     );
   }
 }
 
 WhiteBoard.propTypes = {
-  whiteboard: PropTypes.object.isRequired,
-  lecture: PropTypes.object.isRequired,
+  //lecture: PropTypes.object.isRequired,
   boardname: PropTypes.string.isRequired,
 };
 
