@@ -2,6 +2,7 @@ import _ from 'lodash';
 import testJsonData from '../data/course-list';
 import Util from './Util';
 import RNFetchBlob from 'react-native-fetch-blob-col';
+import { AUTH_URL, COURSELIST_URL } from "../config";
 var React = require('react-native');
 var async = require('async');
 var {
@@ -42,7 +43,7 @@ class NetworkHelper {
 
 
   signin(username, password, callback) {
-    var url = 'https://colflash.cdm.depaul.edu/COLiPadWeb/auth',
+    var url = AUTH_URL,
       qs = {
         v: '1.01',
         u: username,
@@ -111,7 +112,7 @@ class NetworkHelper {
       });
     }
 
-    var url = 'https://colflash.cdm.depaul.edu/COLiPadWeb/courselist',
+    var url = COURSELIST_URL,
       qs = {
         u: username,
         k: token
