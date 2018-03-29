@@ -1,0 +1,13 @@
+rootProject.name = 'col_player3'
+include ':react-native-fetch-blob-col'
+project(':react-native-fetch-blob-col').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-fetch-blob-col/android')
+include ':react-native-fs'
+project(':react-native-fs').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-fs/android')
+include ':react-native-video'
+project(':react-native-video').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-video/android')
+include ':react-native-fetch-blob'
+project(':react-native-fetch-blob').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-fetch-blob/android')
+include ':react-native-colview'
+project(':react-native-colview').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-colview/android')
+
+include ':app'
