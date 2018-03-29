@@ -75,7 +75,6 @@ class NetworkHelper {
         }
         else
         {
-          
           callback({
           system: {
             type: 'user',
@@ -137,7 +136,7 @@ class NetworkHelper {
       })
       .then((response) => response.json())
       .then((lectures) => {
-        console.log('lectures ', lectures);
+        //console.log('lectures ', lectures);
         async.map(lectures,
           async function(lecture, callback) {
             

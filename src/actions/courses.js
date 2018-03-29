@@ -130,7 +130,7 @@ function downloadLecture(lecture) {
         file = fileData[i];
         const desFilePath = lectureDir + '/' + file.filename;
         const isDesExist = await Util.isFileExist(desFilePath);
-        if (!isDesExist && lecture[`${file.anme}size`] !== 0) {
+        if (!isDesExist && lecture[`${file.name}size`] !== 0) {
 
           files.push(file);
         }
@@ -141,6 +141,16 @@ function downloadLecture(lecture) {
     }
     const needDownloads = await getAllNeedDownloads();
     
+    // try {
+    //   for(let file of needDownloads) {
+    //     await downloadFile(next.name, next.filename);
+    //   }
+    //   dispatch(downloadEnd(lecture.id));
+    // } 
+    // catch(err) {
+    //   dispatch(downloadEnd(lecture.id));
+    // }
+
     needDownloads.reduce(function(cur, next) {
       return cur.then(function() {
         return downloadFile(next.name, next.filename);
