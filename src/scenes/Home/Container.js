@@ -16,12 +16,11 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
   var courseInfo = Util.getCourseInfo(state);
-
   return {
-    courseNames: courseInfo.courseNames,
     courses: courseInfo.courses,
     lecture: state.lecture,
-    courseInfo: state.courses
+    loading: state.courses.loading,
+    isInitialized: state.courses.isInitialized,
   };
 }
 

@@ -2,6 +2,7 @@ import _ from 'lodash';
 import testJsonData from '../data/course-list';
 import Util from './Util';
 import RNFetchBlob from 'react-native-fetch-blob-col';
+import  RNFS from 'react-native-fs';
 import { AUTH_URL, COURSELIST_URL } from "../config";
 var React = require('react-native');
 var async = require('async');
@@ -230,7 +231,7 @@ class NetworkHelper {
       }, 1000);
 
     var begin = (response) => {
-      console.log('response ', response);
+      //console.log('response ', response);
     }
     var aProgress = (params) => {
       //console.log('params ', params);
@@ -239,34 +240,52 @@ class NetworkHelper {
     }
     const downloadPath = filepath + ".download";
     const options = {
+      // headers: {
+      //   Range:'bytes='+dBytes + '-',
+      // },
       fromUrl: finalUrl,
-      toFile: downloadPath,
+      toFile: filepath,
       begin: begin,
       progress: aProgress,
+      background: true,
     };
+    
+    return RNFS.downloadFile(options)
+    .promise
+    .then((res) => {
+      //RNFS.completeHandlerIOS(downloader.jobID)
+      // RNFetchBlob.fs.mv(downloadPath, filepath)
+      // .catch(error=> {
+      //   console.log('moveError ', error);
+      // });
+      return res;
+    })
+    .catch(err=> {
+      alert(err);
+    })
 
-    return RNFetchBlob
-    .config({
-      path: downloadPath,
-      breakpointDownload: true,
-      overwrite: false,
-      IOSBackgroundTask: true,
-    })
-    .fetch('GET', finalUrl, {
-        Range:'bytes='+dBytes + '-',
-      })
-    .progress((received, total) => {
-      received = parseInt(received, 10)
-      notifyProgress(received + dBytes, total); 
-    })
-    .then((resp)=> {
-      RNFetchBlob.fs.mv(downloadPath, filepath)
-      .catch(error=> {
-        console.log('moveError ', error);
-      });
-      return resp;
-    })
-    ;
+    // return RNFetchBlob
+    // .config({
+    //   path: downloadPath,
+    //   breakpointDownload: true,
+    //   overwrite: false,
+    //   IOSBackgroundTask: true,
+    // })
+    // .fetch('GET', finalUrl, {
+    //     Range:'bytes='+dBytes + '-',
+    //   })
+    // .progress((received, total) => {
+    //   received = parseInt(received, 10)
+    //   notifyProgress(received + dBytes, total); 
+    // })
+    // .then((resp)=> {
+    //   RNFetchBlob.fs.mv(downloadPath, filepath)
+    //   .catch(error=> {
+    //     console.log('moveError ', error);
+    //   });
+    //   return resp;
+    // });
+    
   }
 
 }

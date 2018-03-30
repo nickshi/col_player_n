@@ -8,11 +8,15 @@ import createLogger from 'redux-logger';
 // other imports...
 
 // create store...
-const logger = createLogger();
-const middleware = [thunk];
 
+const middlewares = [thunk];
+// if (__DEV__) {
+//   const logger = createLogger();
+ 
+//   middlewares.push(logger)
+// }
 const store = compose(
-  applyMiddleware(...middleware)
+  applyMiddleware(...middlewares)
 )(createStore)(reducers);
 
 

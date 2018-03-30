@@ -4338,9 +4338,9 @@ react-native-button@^1.4.2:
   version "1.8.2"
   resolved "https://registry.yarnpkg.com/react-native-button/-/react-native-button-1.8.2.tgz#49e5cadd22ee443adea52a85539d288aa2117ade"
 
-react-native-colview@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/react-native-colview/-/react-native-colview-2.0.0.tgz#268698cbd6888ae540002e5b8e6f25fef13364eb"
+react-native-colview@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/react-native-colview/-/react-native-colview-3.0.0.tgz#ed22ac2619b9ea2e61f07ceabbfb1fb15043a3c2"
 
 react-native-drawer@^2.0.0:
   version "2.5.0"

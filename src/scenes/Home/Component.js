@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import {
   StyleSheet,
   View,
-  ListView,
+  SectionList,
   ActivityIndicator,
   Text,
   Image,
@@ -12,7 +12,7 @@ import {
 import { Actions } from "react-native-router-flux";
 import LectureCell from "./components/LectureCell";
 import Header from "../../components/Header";
-
+import LoadingView from '../../components/LoadingView';
 import Col from "../../lib/col/Col";
 
 import styles from "./style";
@@ -21,22 +21,17 @@ class HomeScreen extends Component {
   constructor(props) {
     super(props);
 
-    const ds = new ListView.DataSource({
-      sectionHeaderHasChanged: (r1, r2) => r1 !== r2,
-      rowHasChanged: (r1, r2) => r1 !== r2
-    });
-
     this.logout = this.logout.bind(this);
     this.playLecture = this.playLecture.bind(this);
     this.downloadLecture = this.downloadLecture.bind(this);
-    this.state = {
-      dataSource: ds.cloneWithRowsAndSections({}, [])
-    };
+
+    this.renderRow = this.renderRow.bind(this);
+    this.renderSectionHeader = this.renderSectionHeader.bind(this);
   }
 
   componentDidMount() {
-    const { courseInfo, coursesActions } = this.props;
-    if (!courseInfo.isInitialized) {
+    const { isInitialized, coursesActions } = this.props;
+    if (!isInitialized) {
       coursesActions.loadCourses();
     }
   }
@@ -81,64 +76,59 @@ class HomeScreen extends Component {
     Actions.pop();
   }
 
-  renderSectionHeader(data, sectionId) {
+  renderSectionHeader(data) {
     return (
       <View style={styles.sectionHeader}>
-        <Text style={styles.sectionHeaderText}>{sectionId}</Text>
+        <Text style={styles.sectionHeaderText}>{data.section.title}</Text>
       </View>
     );
   }
 
   renderRow(rowData) {
-    const self = this;
+    const { item } = rowData;
     return (
       <LectureCell
-        onSelect={() => self.downloadLecture(rowData)}
-        playLecture={() => self.playLecture(rowData)}
-        clearLectureData={() => self.clearLectureData(rowData)}
-        downloadLecture={() => self.downloadLecture(rowData)}
-        lecture={rowData}
+        onSelect={() => this.downloadLecture(item)}
+        playLecture={() => this.playLecture(item)}
+        clearLectureData={() => this.clearLectureData(item)}
+        downloadLecture={() => this.downloadLecture(item)}
+        lecture={item}
       />
     );
   }
 
   render() {
-    var { courseNames, courses, courseInfo } = this.props;
-    if (courseNames === null) lectures = [];
-    if (courses === null) course = {};
-    var content;
-    if (courseInfo.loading)
-      content = (
-        <View style={[styles.centering]}>
-          <ActivityIndicator animating={true} size="large" />
-        </View>
-      );
-    else
-      content = (
-        <ListView
-          dataSource={this.state.dataSource.cloneWithRowsAndSections(
-            courses,
-            courseNames
-          )}
-          renderSectionHeader={this.renderSectionHeader.bind(this)}
-          renderRow={this.renderRow.bind(this)}
-          enableEmptySections={true}
-        />
-      );
+    let { courses, loading, lecture } = this.props;
+
+    let sections = Object.keys(courses).map(key => {
+      return {
+        title: key,
+        data: courses[key]
+      }
+    })
+
     return (
       <View style={styles.container}>
         <Header isLogged={true} onLogout={this.logout} />
-        {content}
-        {this.lectureLoading()}
+        { (loading || lecture.loading) && <LoadingView/> }
+        {
+          !loading && (
+            <SectionList
+              sections={sections}
+              renderItem={this.renderRow}
+              renderSectionHeader={this.renderSectionHeader}
+              keyExtractor={(item, index) => index}
+            />
+          )
+        }
       </View>
     );
   }
 }
 
 HomeScreen.propTypes = {
-  lectures: PropTypes.object,
-  course: PropTypes.object,
-  courseInfo: PropTypes.object,
+  courses: PropTypes.object.isRequired,
+  loading: PropTypes.bool.isRequired,
   coursesActions: PropTypes.object,
   lectureActions: PropTypes.object,
   accountActions: PropTypes.object
